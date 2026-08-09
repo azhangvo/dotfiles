@@ -1,0 +1,24 @@
+[init]
+	defaultBranch = main
+[core]
+	autocrlf = input
+[alias]
+	p = pull
+	s = status
+	co = checkout
+	b = branch
+	d = diff
+	l = log
+	f = fetch
+	cp = cherry-pick
+	a = add
+	c = commit
+	ps = push
+	m = merge
+	rb = rebase
+	sh = stash
+	r = remote
+	t = tag
+	at = "!f() { git checkout \"$(git rev-list -n 1 --before=\"$1\" ${2:-HEAD})\"; }; f"
+	atl = "!f() { git log --oneline --graph --decorate -7 \"$(git rev-list -n 1 --before=\"$1\" ${2:-HEAD})\"; }; f"
+	atc = "!f() { git rev-list -n 1 --before=\"$1\" ${2:-HEAD}; }; f"
