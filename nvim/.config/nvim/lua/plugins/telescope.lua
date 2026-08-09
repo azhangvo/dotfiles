@@ -1,6 +1,10 @@
 return {
   "nvim-telescope/telescope.nvim",
-  branch = "0.1.x",
+  -- `0.1.x` is telescope's old frozen stable branch (no commits since May
+  -- 2024) -- `master` is the actual actively-maintained default branch and
+  -- has fixes `0.1.x` never received (e.g. compat with nvim-treesitter's
+  -- new `main`-branch rewrite, github.com/nvim-telescope/telescope.nvim
+  -- issue #3547 / PR #3566, which 0.1.x's previewer crashed on).
   dependencies = {
     "nvim-lua/plenary.nvim",
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },

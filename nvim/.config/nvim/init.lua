@@ -1,6 +1,6 @@
-if vim.fn.has("nvim-0.10") == 0 then
+if vim.fn.has("nvim-0.11.3") == 0 then
   vim.notify(
-    "This config requires Neovim >= 0.10 (oil.nvim's floor, the strictest of any plugin here)."
+    "This config requires Neovim >= 0.11.3 (nvim-lspconfig's floor, the strictest of any plugin here)."
       .. " Current version is too old — install a newer nvim.",
     vim.log.levels.ERROR
   )
