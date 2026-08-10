@@ -1,0 +1,61 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+palette = "kanagawa_dragon"
+
+# Segment blocks cascade bg1 -> bg2 -> bg3 (mirrors Dragon's own
+# near-black-to-gray progression) with angular (hard-edged, not rounded)
+# powerline separators between them, fading to the terminal's own
+# background before the prompt character. Each module owns its own
+# bg/fg via its own `style` field -- a module's own default format
+# (e.g. directory's built-in "bold cyan") resets and overrides an
+# outer wrapper in the top-level `format` string otherwise, which is
+# what caused the block backgrounds to not match the separators on the
+# first pass. Requires a Nerd Font in the terminal for the separator
+# glyphs () and the git branch icon to render -- plain boxes/question
+# marks means the terminal font doesn't have them.
+format = """
+[](fg:bg1)$time[](fg:bg1 bg:bg2)$directory[](fg:bg2 bg:bg3)$git_branch[](fg:bg3)
+$character"""
+
+right_format = """$cmd_duration"""
+
+add_newline = true
+
+# Same hex values as nvim/lua/plugins/kanagawa.lua (rebelot/kanagawa.nvim,
+# "dragon" variant) and tmux/.tmux.conf -- kept in sync by hand across all
+# three, since none of these tools share a config format to drive from one
+# source file.
+[palettes.kanagawa_dragon]
+bg1 = "#1D1C19"     # dragonBlack2 -- time segment
+bg2 = "#282727"     # dragonBlack4 -- path segment
+bg3 = "#393836"     # dragonBlack5 -- branch segment
+text = "#c5c9c5"    # dragonWhite
+green = "#87a987"   # dragonGreen -- prompt char success
+red = "#c4746e"     # dragonRed -- prompt char, error
+yellow = "#c4b28a"  # dragonYellow -- command duration
+
+[time]
+disabled = false
+style = "bg:bg1 fg:text"
+format = "[ $time ]($style)"
+time_format = "%H:%M"
+
+[directory]
+style = "bg:bg2 fg:text"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncate_to_repo = true
+
+[git_branch]
+symbol = ""
+style = "bg:bg3 fg:yellow"
+format = "[ $symbol$branch ]($style)"
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+
+[cmd_duration]
+min_time = 2_000
+style = "bg:bg1 fg:text"
+format = "[](fg:bg1)[ $duration ]($style)"

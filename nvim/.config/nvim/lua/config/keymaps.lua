@@ -11,15 +11,18 @@
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Goto Definition" })
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Goto Declaration" })
 vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "Goto References" })
+vim.keymap.set("n", "<leader>k", function()
+  vim.lsp.buf.format({ async = true })
+end, { desc = "Format buffer" })
 
 -- Big movement: same direction as lowercase hjkl, 5 units at a time instead
 -- of 1. Overrides vim's defaults for these (H/L = top/bottom of window, J =
 -- join lines, K = hover via LSP-attach default, though the LSP default
 -- politely backs off since a custom `K` keymap already exists here).
-vim.keymap.set("n", "H", "5h", { desc = "Left 5" })
-vim.keymap.set("n", "J", "5j", { desc = "Down 5" })
-vim.keymap.set("n", "K", "5k", { desc = "Up 5" })
-vim.keymap.set("n", "L", "5l", { desc = "Right 5" })
+vim.keymap.set({"n", "v"}, "H", "5h", { desc = "Left 5" })
+vim.keymap.set({"n", "v"}, "J", "5j", { desc = "Down 5" })
+vim.keymap.set({"n", "v"}, "K", "5k", { desc = "Up 5" })
+vim.keymap.set({"n", "v"}, "L", "5l", { desc = "Right 5" })
 
 -- Like `*` (search word under cursor, populate search register + history,
 -- enable hlsearch) but without jumping to the next match -- cursor stays put.
