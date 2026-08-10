@@ -1,21 +1,12 @@
 return {
   "coder/claudecode.nvim",
-  -- README's example spec depends on folke/snacks.nvim for its "snacks"
-  -- terminal provider, but that's `pcall`-guarded in the plugin's own
-  -- source (lua/claudecode/terminal/snacks.lua) and only loaded when
-  -- provider="snacks" is actually selected -- not a hard requirement.
-  -- snacks itself was deliberately dropped from this config (alpha covers
-  -- the dashboard use case), so use Neovim's own built-in terminal instead
-  -- rather than pulling snacks back in just to satisfy an unused provider.
+  -- README's example needs snacks.nvim for its terminal provider, but
+  -- that's optional (pcall-guarded); use nvim's own built-in terminal.
   opts = {
     terminal = { provider = "native" },
   },
-  -- full list of the plugin's own user commands (verified directly from
-  -- lua/claudecode/init.lua's nvim_create_user_command calls, not just the
-  -- README's example -- that list was actually missing ClaudeCodeSendText).
-  -- Same bug class as the earlier alpha dashboard fix: a command absent
-  -- from this list can't be lazy-load-triggered, so it just doesn't exist
-  -- until something else loads the plugin first.
+  -- Full command list (README's example omits ClaudeCodeSendText) -- a
+  -- command missing here can't lazy-load-trigger the plugin.
   cmd = {
     "ClaudeCode",
     "ClaudeCodeFocus",
@@ -54,9 +45,7 @@ return {
   config = function(_, opts)
     if vim.fn.executable("claude") == 0 then
       vim.notify(
-        "claudecode: `claude` CLI not found on PATH -- this plugin drives it as a"
-          .. " subprocess, nothing will work without it. Install it from"
-          .. " https://claude.com/claude-code.",
+        "claudecode: `claude` CLI not found on PATH -- install from https://claude.com/claude-code.",
         vim.log.levels.WARN
       )
     end

@@ -1,7 +1,6 @@
 return {
   "saghen/blink.cmp",
-  -- pinned to the latest stable major -- v2 only exists on the unreleased
-  -- `main` branch as of writing, no tagged release yet.
+  -- Latest stable major -- v2 has no tagged release yet.
   version = "1.*",
   dependencies = { "rafamadriz/friendly-snippets" },
   opts = {

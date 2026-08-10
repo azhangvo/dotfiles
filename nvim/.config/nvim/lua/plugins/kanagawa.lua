@@ -1,7 +1,6 @@
 return {
   "rebelot/kanagawa.nvim",
-  -- colorscheme plugins need to load and apply before anything else renders,
-  -- so lazy-loading (the default for every other plugin here) is wrong here.
+  -- Colorschemes need to load before anything else renders.
   lazy = false,
   priority = 1000,
   opts = {

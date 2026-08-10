@@ -16,10 +16,8 @@ return {
 
     require("nvim-treesitter").setup()
 
-    -- main branch dropped `ensure_installed`/`highlight.enable` config --
-    -- install + enable per-buffer on demand instead of maintaining a fixed
-    -- language list up front. Chained through `:await` so highlighting
-    -- starts right after a fresh install finishes, not just on next open.
+    -- main branch dropped ensure_installed/highlight.enable -- install +
+    -- enable per-buffer on demand instead.
     vim.api.nvim_create_autocmd("FileType", {
       callback = function(ev)
         local lang = vim.treesitter.language.get_lang(ev.match) or ev.match

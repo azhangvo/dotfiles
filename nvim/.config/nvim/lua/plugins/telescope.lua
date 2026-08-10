@@ -1,10 +1,6 @@
 return {
   "nvim-telescope/telescope.nvim",
-  -- `0.1.x` is telescope's old frozen stable branch (no commits since May
-  -- 2024) -- `master` is the actual actively-maintained default branch and
-  -- has fixes `0.1.x` never received (e.g. compat with nvim-treesitter's
-  -- new `main`-branch rewrite, github.com/nvim-telescope/telescope.nvim
-  -- issue #3547 / PR #3566, which 0.1.x's previewer crashed on).
+  -- Tracks `master`, not the frozen `0.1.x` branch -- see BACKLOG.md.
   dependencies = {
     "nvim-lua/plenary.nvim",
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
@@ -40,10 +36,8 @@ return {
     local telescope = require("telescope")
     telescope.setup({
       defaults = {
-        -- rg skips dotfiles/dotdirs by default, which is most of this repo
-        -- (.config/, .gitconfig, .dotfiles/, .tmux.conf) — search hidden
-        -- paths but keep .git/ internals out explicitly, since --hidden
-        -- overrides rg's usual automatic exclusion of .git/.
+        -- Search hidden files (most of this repo is dotfiles) but keep
+        -- .git/ internals out -- --hidden overrides rg's usual exclusion.
         vimgrep_arguments = {
           "rg",
           "--color=never",
@@ -58,9 +52,9 @@ return {
       },
       pickers = {
         find_files = {
-          hidden = true,
-          -- find_files doesn't take vimgrep_arguments; same reasoning as above.
-          additional_args = { "--glob=!.git/" },
+          -- find_files ignores `additional_args` (unlike live_grep/
+          -- grep_string) -- `find_command` bypasses that gap entirely.
+          find_command = { "rg", "--files", "--color", "never", "--hidden", "--glob=!.git/" },
         },
       },
     })
