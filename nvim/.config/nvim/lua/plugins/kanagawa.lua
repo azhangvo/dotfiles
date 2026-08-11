@@ -6,6 +6,7 @@ return {
   opts = {
     theme = "dragon",
     background = { dark = "dragon" },
+    commentStyle = { italic = false },
   },
   config = function(_, opts)
     require("kanagawa").setup(opts)
