@@ -50,4 +50,6 @@ if [[ " ${PACKAGES[*]} " == *" shell "* ]]; then
   append_hook "$HOME/.bash_profile" '[ -f "$HOME/.bashrc" ] && . "$HOME/.bashrc"'
 fi
 
+"$DOTFILES_ROOT/check-tools.sh"
+
 echo "==> Done"

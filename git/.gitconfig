@@ -2,6 +2,29 @@
 	defaultBranch = main
 [core]
 	autocrlf = input
+	pager = delta
+[interactive]
+	diffFilter = delta --color-only
+[delta]
+	navigate = true
+	line-numbers = true
+	syntax-theme = OneHalfDark
+	; add/remove colors are kanagawa.nvim's own Dragon-variant vcs/diff
+	; colors (autumnGreen/autumnRed, winterGreen/winterRed), not the
+	; general dragonGreen/dragonRed accent used in tmux/starship -- these
+	; are what the colorscheme itself actually renders for git diffs.
+	minus-style = syntax "#43242B"
+	minus-emph-style = syntax "#C34043"
+	plus-style = syntax "#2B3328"
+	plus-emph-style = syntax "#76946A"
+	line-numbers-minus-style = "#C34043"
+	line-numbers-plus-style = "#76946A"
+	line-numbers-zero-style = "#625e5a"
+	; dragonYellow, the shared accent color everywhere else in this repo.
+	file-style = "#c4b28a" bold
+	file-decoration-style = "#c4b28a" ul
+	hunk-header-style = syntax italic "#625e5a"
+	hunk-header-decoration-style = "#c4b28a" box
 [alias]
 	p = pull
 	s = status

@@ -9,3 +9,7 @@ if command -v eza >/dev/null 2>&1; then
   alias la="eza -la --icons=auto --group-directories-first --git"
   alias lt="eza --tree --icons=auto --level=2"
 fi
+
+if command -v bat >/dev/null 2>&1; then
+  alias cat="bat"
+fi
