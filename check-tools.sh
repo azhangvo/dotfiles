@@ -21,6 +21,9 @@ TOOLS=(
   "tldr|tealdeer, no config dependency, just the binary itself"
   "gh|GitHub CLI, no config dependency"
   "claude|nvim claudecode.nvim"
+  "fd|no config dependency, just the binary itself"
+  "dust|no config dependency, just the binary itself"
+  "duf|no config dependency, just the binary itself"
 )
 
 missing=()
