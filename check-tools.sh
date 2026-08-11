@@ -24,6 +24,8 @@ TOOLS=(
   "fd|no config dependency, just the binary itself"
   "dust|no config dependency, just the binary itself"
   "duf|no config dependency, just the binary itself"
+  "zoxide|shell/ z and zi commands"
+  "btop|btop/ theme config"
 )
 
 missing=()

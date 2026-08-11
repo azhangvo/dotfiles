@@ -1,0 +1,51 @@
+# Kanagawa Dragon -- same hex as nvim/tmux/starship/git-delta, kept in
+# sync by hand since none of these tools share a config format.
+
+theme[main_bg]="#1D1C19"
+theme[main_fg]="#c5c9c5"
+theme[title]="#c4b28a"
+theme[hi_fg]="#c4b28a"
+theme[selected_bg]="#393836"
+theme[selected_fg]="#c5c9c5"
+theme[inactive_fg]="#625e5a"
+theme[proc_misc]="#87a987"
+
+theme[cpu_box]="#625e5a"
+theme[mem_box]="#625e5a"
+theme[net_box]="#625e5a"
+theme[proc_box]="#625e5a"
+theme[div_line]="#625e5a"
+
+# Gradients: green (low/good) -> yellow (mid) -> red (high/hot), same three
+# hues used as the general accent family in tmux/starship/fzf.
+theme[temp_start]="#87a987"
+theme[temp_mid]="#c4b28a"
+theme[temp_end]="#c4746e"
+
+theme[cpu_start]="#87a987"
+theme[cpu_mid]="#c4b28a"
+theme[cpu_end]="#c4746e"
+
+theme[free_start]="#87a987"
+theme[free_mid]="#c4b28a"
+theme[free_end]="#c4746e"
+
+theme[cached_start]="#87a987"
+theme[cached_mid]="#c4b28a"
+theme[cached_end]="#c4746e"
+
+theme[available_start]="#87a987"
+theme[available_mid]="#c4b28a"
+theme[available_end]="#c4746e"
+
+theme[used_start]="#87a987"
+theme[used_mid]="#c4b28a"
+theme[used_end]="#c4746e"
+
+theme[download_start]="#87a987"
+theme[download_mid]="#c4b28a"
+theme[download_end]="#c4746e"
+
+theme[upload_start]="#87a987"
+theme[upload_mid]="#c4b28a"
+theme[upload_end]="#c4746e"
