@@ -50,6 +50,18 @@ if [[ " ${PACKAGES[*]} " == *" shell "* ]]; then
   append_hook "$HOME/.bash_profile" '[ -f "$HOME/.bashrc" ] && . "$HOME/.bashrc"'
 fi
 
+# Same reasoning as the shell rc files: ~/.gitconfig is never stowed
+# directly, since it needs to hold a machine-local [user] name/email that
+# has no business being in a repo meant to be pushed publicly. Only a hook
+# pointing at the shared, repo-managed config is appended. If ~/.gitconfig
+# doesn't exist yet, this creates it with just the hook -- you'll still
+# need to add your own [user] section once, by hand, per machine.
+if [[ " ${PACKAGES[*]} " == *" git "* ]]; then
+  echo "==> Wiring git hook"
+  append_hook "$HOME/.gitconfig" '[include]
+	path = ~/.dotfiles/gitconfig'
+fi
+
 "$DOTFILES_ROOT/check-tools.sh"
 
 echo "==> Done"
