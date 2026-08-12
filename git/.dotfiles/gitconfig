@@ -8,28 +8,17 @@
 [delta]
 	navigate = true
 	line-numbers = true
-	; custom .tmTheme, built from kanagawa.nvim's own dragon `syn` table --
-	; see bat/.config/bat/themes/Kanagawa-Dragon.tmTheme. delta shares bat's
-	; theme engine, so this needs `bat cache --build` after edits.
+	; custom .tmTheme built from kanagawa.nvim's own dragon `syn` table, see
+	; bat/.config/bat/themes/Kanagawa-Dragon.tmTheme. Shares bat's theme
+	; engine, so edits need `bat cache --build` to take effect.
 	syntax-theme = Kanagawa-Dragon
-	; add/remove colors are kanagawa.nvim's own Dragon-variant vcs/diff
-	; colors (autumnGreen/autumnRed, winterGreen/winterRed), not the
-	; general dragonGreen/dragonRed accent used in tmux/starship -- these
-	; are what the colorscheme itself actually renders for git diffs.
+	; kanagawa.nvim's own Dragon-variant vcs/diff colors, not the general
+	; dragonGreen/dragonRed accent used in tmux/starship.
 	minus-style = syntax "#43242B"
-	; emph (the exact changed word/chars) background, several rounds:
-	; 1) full vcs.added/removed autumnGreen/autumnRed bg -- syntax-colored
-	;    text at near-equal luminance to the bg was unreadable.
-	; 2) plain bold, no color accent -- judged too subtle.
-	; 3) autumnGreen/autumnRed as *foreground* instead of background --
-	;    judged the wrong axis; still wanted a background accent.
-	; Landed here: a background between the line-level winterGreen/winterRed
-	; tint and the too-vivid autumnGreen/autumnRed, linearly blended 35%
-	; toward autumn from winter (no swatch at this exact point exists in
-	; kanagawa's own palette, so this is a documented derivation from two
-	; real theme colors, not an invented one). Verified on a real word-diff:
-	; emph bg luminance ~78 vs. the (unchanged) syntax text luminance ~146 --
-	; a real, comfortable gap, unlike the original ~140-vs-150 collision.
+	; emph (changed word/chars) bg: blended 35% toward autumnGreen/Red from
+	; the line-level winterGreen/Red tint -- full autumn color was too
+	; saturated against syntax-colored text, this keeps a visible accent
+	; without the collision.
 	minus-emph-style = syntax bold "#702E33"
 	plus-style = syntax "#2B3328"
 	plus-emph-style = syntax bold "#45553F"

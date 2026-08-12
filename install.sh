@@ -51,11 +51,8 @@ if [[ " ${PACKAGES[*]} " == *" shell "* ]]; then
 fi
 
 # Same reasoning as the shell rc files: ~/.gitconfig is never stowed
-# directly, since it needs to hold a machine-local [user] name/email that
-# has no business being in a repo meant to be pushed publicly. Only a hook
-# pointing at the shared, repo-managed config is appended. If ~/.gitconfig
-# doesn't exist yet, this creates it with just the hook -- you'll still
-# need to add your own [user] section once, by hand, per machine.
+# directly, since it needs a machine-local [user] name/email. Add your own
+# [user] section by hand once per machine -- this only appends the hook.
 if [[ " ${PACKAGES[*]} " == *" git "* ]]; then
   echo "==> Wiring git hook"
   append_hook "$HOME/.gitconfig" '[include]
