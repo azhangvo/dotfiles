@@ -4,9 +4,22 @@
 -- motions; declaration = symbol announced without a body (e.g. a C header
 -- prototype), definition = the real implementation -- most servers outside
 -- C/C++ don't implement declaration, so `gD` no-ops there.
-vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Goto Definition" })
+-- `gd`/`gr` routed through Telescope's LSP pickers rather than
+-- vim.lsp.buf.* directly -- their default handler is nvim's plain
+-- quickfix-list UI; this repo uses Telescope for every other picker
+-- (find_files/live_grep/workspace_symbols, see plugins/telescope.lua), so
+-- this keeps LSP nav consistent with that. `gD` stays on vim.lsp.buf --
+-- telescope.builtin has no lsp_declarations picker to route it through.
+-- require() deferred into the callback since telescope.nvim is lazy-loaded
+-- (see plugins/telescope.lua's `keys` triggers) -- these binds may run
+-- before it's loaded otherwise.
+vim.keymap.set("n", "gd", function()
+  require("telescope.builtin").lsp_definitions()
+end, { desc = "Goto Definition" })
 vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Goto Declaration" })
-vim.keymap.set("n", "gr", vim.lsp.buf.references, { desc = "Goto References" })
+vim.keymap.set("n", "gr", function()
+  require("telescope.builtin").lsp_references()
+end, { desc = "Goto References" })
 vim.keymap.set("n", "<leader>k", function()
   vim.lsp.buf.format({ async = true })
 end, { desc = "Format buffer" })
