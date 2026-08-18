@@ -1,0 +1,47 @@
+-- Reference config for pinning nvim-treesitter to its `master` branch
+-- instead of `main` (see plugins/treesitter.lua), for systems where
+-- tree-sitter-cli isn't available. INERT by design -- the `.lua.example`
+-- extension means lazy.nvim's `require("lazy").setup("plugins")` import
+-- never loads this file (it only picks up `*.lua`). To actually use it:
+--   1. rename this file to `treesitter-master.lua`
+--   2. remove/rename plugins/treesitter.lua -- both specify
+--      "nvim-treesitter" and lazy.nvim can't merge two specs for the same
+--      plugin with different branches.
+--
+-- Why master instead of main: main hard-requires tree-sitter-cli for
+-- EVERY parser (both `tree-sitter generate` and `tree-sitter build`, see
+-- BACKLOG.md). master only needs it for the minority of parsers that ship
+-- grammar-only source (no committed parser.c) -- most common languages
+-- (bash, lua, python, json, yaml, markdown, ...) ship a pre-generated
+-- parser.c and master compiles that directly with a system C compiler
+-- (cc/gcc/clang/zig, whichever it finds), no CLI involved.
+--
+-- CAUTION, verified against upstream, not assumed:
+--   * master's own README states Neovim 0.12 is NOT supported (0.10/0.11
+--     only) -- this repo's init.lua requires >=0.11.3, and the nvim
+--     actually in use as of this writing is 0.12.4. Test on the target
+--     machine before relying on this; it may simply not work.
+--   * master is frozen -- "provided for backward compatibility only", no
+--     new parsers/queries/fixes going forward (upstream's own words).
+--   * auto_install below still assumes tree-sitter-cli for anything that
+--     needs generating from grammar.js. If it's truly unavailable, set
+--     auto_install = false and populate parsers once via `:TSUpdate` on a
+--     machine that does have it (or accept those specific languages won't
+--     get treesitter highlighting -- they fall back to plain :syntax,
+--     same graceful degradation main already has).
+return {
+  "nvim-treesitter/nvim-treesitter",
+  branch = "master",
+  -- master's own docs: doesn't support lazy-loading.
+  lazy = false,
+  build = ":TSUpdate",
+  config = function()
+    require("nvim-treesitter.configs").setup({
+      ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "bash", "python", "markdown", "markdown_inline" },
+      sync_install = false,
+      auto_install = true,
+      highlight = { enable = true },
+      indent = { enable = true },
+    })
+  end,
+}
