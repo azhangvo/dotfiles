@@ -5,6 +5,10 @@ return {
     "nvim-lua/plenary.nvim",
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
     "nvim-telescope/telescope-live-grep-args.nvim",
+    -- Routes vim.ui.select (code actions, the config/refs.lua remote
+    -- picker, etc.) through Telescope too, instead of nvim's plain
+    -- built-in list -- keeps every picker in this config consistent.
+    "nvim-telescope/telescope-ui-select.nvim",
   },
   keys = {
     { "<leader>f", "<cmd>Telescope find_files<cr>", desc = "Find Files" },
@@ -57,8 +61,14 @@ return {
           find_command = { "rg", "--files", "--color", "never", "--hidden", "--glob=!.git/" },
         },
       },
+      extensions = {
+        ["ui-select"] = {
+          require("telescope.themes").get_dropdown({}),
+        },
+      },
     })
     pcall(telescope.load_extension, "fzf")
     pcall(telescope.load_extension, "live_grep_args")
+    pcall(telescope.load_extension, "ui-select")
   end,
 }

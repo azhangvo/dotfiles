@@ -35,23 +35,39 @@ vim.keymap.set("n", "<leader>e", function()
 end, { desc = "Line diagnostics" })
 
 -- Reference-copying macros (see config/refs.lua). g/G mirror each other
--- (commit-pinned vs branch-pinned GitHub link), l is the no-GitHub local
--- fallback. Visual variants read the selection before the trailing Esc
--- drops back to Normal mode -- same pattern as gs above.
+-- (commit-pinned vs branch-pinned GitHub link) and always use a default
+-- remote with no prompt; r/R are the same pair but always show the
+-- Telescope remote picker, even with only one candidate. l is the
+-- no-GitHub local fallback. Visual variants read the selection before the
+-- trailing Esc drops back to Normal mode -- same pattern as gs above.
 vim.keymap.set("n", "<leader>pg", function()
-  require("config.refs").github_link("commit")
-end, { desc = "Copy GitHub link (commit)" })
+  require("config.refs").github_link("commit", false)
+end, { desc = "Copy GitHub link (commit, default remote)" })
 vim.keymap.set("x", "<leader>pg", function()
-  require("config.refs").github_link("commit")
+  require("config.refs").github_link("commit", false)
   vim.cmd("normal! \27")
-end, { desc = "Copy GitHub link (commit)" })
+end, { desc = "Copy GitHub link (commit, default remote)" })
 vim.keymap.set("n", "<leader>pG", function()
-  require("config.refs").github_link("branch")
-end, { desc = "Copy GitHub link (branch)" })
+  require("config.refs").github_link("branch", false)
+end, { desc = "Copy GitHub link (branch, default remote)" })
 vim.keymap.set("x", "<leader>pG", function()
-  require("config.refs").github_link("branch")
+  require("config.refs").github_link("branch", false)
   vim.cmd("normal! \27")
-end, { desc = "Copy GitHub link (branch)" })
+end, { desc = "Copy GitHub link (branch, default remote)" })
+vim.keymap.set("n", "<leader>pr", function()
+  require("config.refs").github_link("commit", true)
+end, { desc = "Copy GitHub link (commit, pick remote)" })
+vim.keymap.set("x", "<leader>pr", function()
+  require("config.refs").github_link("commit", true)
+  vim.cmd("normal! \27")
+end, { desc = "Copy GitHub link (commit, pick remote)" })
+vim.keymap.set("n", "<leader>pR", function()
+  require("config.refs").github_link("branch", true)
+end, { desc = "Copy GitHub link (branch, pick remote)" })
+vim.keymap.set("x", "<leader>pR", function()
+  require("config.refs").github_link("branch", true)
+  vim.cmd("normal! \27")
+end, { desc = "Copy GitHub link (branch, pick remote)" })
 vim.keymap.set("n", "<leader>pl", function()
   require("config.refs").local_link()
 end, { desc = "Copy local file:line ref" })

@@ -98,8 +98,20 @@ local function finish_github_link(ref_kind, owner_repo, root, rel, s, e)
   yank(url, "GitHub (" .. ref_kind .. ")")
 end
 
+-- "origin" if it's on github.com, else whichever github.com remote came
+-- first -- the no-prompt fast path.
+local function default_remote(remotes)
+  for _, r in ipairs(remotes) do
+    if r.name == "origin" then
+      return r
+    end
+  end
+  return remotes[1]
+end
+
 ---@param ref_kind "commit"|"branch"
-function M.github_link(ref_kind)
+---@param pick_remote boolean always show the remote picker, even with only one candidate
+function M.github_link(ref_kind, pick_remote)
   local root = git_root()
   if not root then
     vim.notify("refs: not inside a git repo", vim.log.levels.ERROR)
@@ -113,8 +125,8 @@ function M.github_link(ref_kind)
   local file = vim.api.nvim_buf_get_name(0)
   local rel = relpath(root, file)
   local s, e = line_range()
-  if #remotes == 1 then
-    finish_github_link(ref_kind, remotes[1].owner_repo, root, rel, s, e)
+  if not pick_remote then
+    finish_github_link(ref_kind, default_remote(remotes).owner_repo, root, rel, s, e)
     return
   end
   vim.ui.select(remotes, {
