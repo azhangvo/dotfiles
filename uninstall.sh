@@ -55,4 +55,12 @@ if [[ " ${PACKAGES[*]} " == *" git "* ]]; then
   remove_hook "$HOME/.gitconfig"
 fi
 
+# Reverse of install.sh's cache rebuild: the custom .tmTheme is gone now
+# that bat is unstowed, so clear the cache rather than rebuild it --
+# rebuilding would just bake in a now-dangling reference to it.
+if [[ " ${PACKAGES[*]} " == *" bat "* ]] && command -v bat >/dev/null 2>&1; then
+  echo "==> Clearing bat/delta theme cache"
+  bat cache --clear
+fi
+
 echo "==> Done"

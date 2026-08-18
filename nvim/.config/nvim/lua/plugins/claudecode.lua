@@ -25,6 +25,10 @@ return {
     "ClaudeCodeCloseAllDiffs",
   },
   keys = {
+    -- <Cmd> mappings run without changing mode, so this works to close the
+    -- pane from inside the Claude terminal too, no need to leave terminal
+    -- mode first (:help <Cmd>).
+    { "<C-e>", "<cmd>ClaudeCode<cr>", mode = { "n", "t" }, desc = "Toggle Claude" },
     { "<leader>a", nil, desc = "AI/Claude Code" },
     { "<leader>ac", "<cmd>ClaudeCode<cr>", desc = "Toggle Claude" },
     { "<leader>af", "<cmd>ClaudeCodeFocus<cr>", desc = "Focus Claude" },

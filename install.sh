@@ -59,6 +59,14 @@ if [[ " ${PACKAGES[*]} " == *" git "* ]]; then
 	path = ~/.dotfiles/gitconfig'
 fi
 
+# delta (git/.dotfiles/gitconfig's syntax-theme) shares bat's syntect theme
+# engine, which reads .tmTheme files into a binary cache -- stowing the
+# .tmTheme file alone isn't enough, the cache needs rebuilding to pick it up.
+if [[ " ${PACKAGES[*]} " == *" bat "* ]] && command -v bat >/dev/null 2>&1; then
+  echo "==> Rebuilding bat/delta theme cache"
+  bat cache --build
+fi
+
 "$DOTFILES_ROOT/check-tools.sh"
 
 echo "==> Done"

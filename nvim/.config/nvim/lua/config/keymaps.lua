@@ -29,6 +29,40 @@ end, { desc = "Format buffer" })
 -- Core's default hover bind (`K`) backs off since `K` is remapped below.
 vim.keymap.set("n", "<leader>t", vim.lsp.buf.hover, { desc = "Hover (tooltip)" })
 
+vim.diagnostic.config({ float = { border = "rounded" } })
+vim.keymap.set("n", "<leader>e", function()
+  vim.diagnostic.open_float()
+end, { desc = "Line diagnostics" })
+
+-- Reference-copying macros (see config/refs.lua). g/G mirror each other
+-- (commit-pinned vs branch-pinned GitHub link), l is the no-GitHub local
+-- fallback. Visual variants read the selection before the trailing Esc
+-- drops back to Normal mode -- same pattern as gs above.
+vim.keymap.set("n", "<leader>pg", function()
+  require("config.refs").github_link("commit")
+end, { desc = "Copy GitHub link (commit)" })
+vim.keymap.set("x", "<leader>pg", function()
+  require("config.refs").github_link("commit")
+  vim.cmd("normal! \27")
+end, { desc = "Copy GitHub link (commit)" })
+vim.keymap.set("n", "<leader>pG", function()
+  require("config.refs").github_link("branch")
+end, { desc = "Copy GitHub link (branch)" })
+vim.keymap.set("x", "<leader>pG", function()
+  require("config.refs").github_link("branch")
+  vim.cmd("normal! \27")
+end, { desc = "Copy GitHub link (branch)" })
+vim.keymap.set("n", "<leader>pl", function()
+  require("config.refs").local_link()
+end, { desc = "Copy local file:line ref" })
+vim.keymap.set("x", "<leader>pl", function()
+  require("config.refs").local_link()
+  vim.cmd("normal! \27")
+end, { desc = "Copy local file:line ref" })
+vim.keymap.set("n", "<leader>pi", function()
+  require("config.refs").python_import_path()
+end, { desc = "Copy Python import path" })
+
 -- Big movement: hjkl direction, 5 units at a time.
 vim.keymap.set({ "n", "v" }, "H", "5h", { desc = "Left 5" })
 vim.keymap.set({ "n", "v" }, "J", "5j", { desc = "Down 5" })
