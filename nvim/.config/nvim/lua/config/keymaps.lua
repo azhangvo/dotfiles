@@ -31,11 +31,21 @@ vim.keymap.set("n", "<leader>k", function()
 end, { desc = "Format buffer" })
 -- Core's default hover bind (`K`) backs off since `K` is remapped below.
 vim.keymap.set("n", "<leader>t", vim.lsp.buf.hover, { desc = "Hover (tooltip)" })
+vim.keymap.set({ "n", "x" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Code action" })
 
+-- Diagnostics, scoped by how much of the workspace to look at: l(ine) is
+-- the cursor's own diagnostics as a floating popup; f(ile)/p(roject) route
+-- through Telescope, same rationale as the gd/gr/gt/gi pickers above.
 vim.diagnostic.config({ float = { border = "rounded" } })
-vim.keymap.set("n", "<leader>e", function()
+vim.keymap.set("n", "<leader>el", function()
   vim.diagnostic.open_float()
 end, { desc = "Line diagnostics" })
+vim.keymap.set("n", "<leader>ef", function()
+  require("telescope.builtin").diagnostics({ bufnr = 0 })
+end, { desc = "File diagnostics" })
+vim.keymap.set("n", "<leader>ep", function()
+  require("telescope.builtin").diagnostics()
+end, { desc = "Project diagnostics" })
 
 -- Reference-copying macros (see config/refs.lua). g/G mirror each other
 -- (commit-pinned vs branch-pinned GitHub link) and always use a default
@@ -82,11 +92,24 @@ vim.keymap.set("n", "<leader>pi", function()
   require("config.refs").python_import_path()
 end, { desc = "Copy Python import path" })
 
--- Big movement: hjkl direction, 5 units at a time.
-vim.keymap.set({ "n", "v" }, "H", "5h", { desc = "Left 5" })
-vim.keymap.set({ "n", "v" }, "J", "5j", { desc = "Down 5" })
-vim.keymap.set({ "n", "v" }, "K", "5k", { desc = "Up 5" })
-vim.keymap.set({ "n", "v" }, "L", "5l", { desc = "Right 5" })
+-- H/L: start/end of the *visual* (display) line -- g0/g$ rather than 0/$,
+-- so on a wrapped line they land at the wrap boundary under the cursor
+-- instead of jumping to the true start/end of the logical line.
+vim.keymap.set({ "n", "v" }, "H", "g0", { desc = "Start of visual line" })
+vim.keymap.set({ "n", "v" }, "L", "g$", { desc = "End of visual line" })
+
+-- J/K: 5 *display* lines at a time (g-prefixed motions), so a wrapped line
+-- counts as several stops instead of collapsing to one jump per logical
+-- line.
+vim.keymap.set({ "n", "v" }, "J", "5gj", { desc = "Down 5 (visual lines)" })
+vim.keymap.set({ "n", "v" }, "K", "5gk", { desc = "Up 5 (visual lines)" })
+
+-- Plain j/k get the same display-line fix. The v:count check keeps numeric
+-- counts working as logical-line jumps (e.g. 12j) -- gj/gk with a count
+-- moves that many *display* lines instead, which isn't what a typed count
+-- means here.
+vim.keymap.set({ "n", "v" }, "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true, desc = "Down (visual line aware)" })
+vim.keymap.set({ "n", "v" }, "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true, desc = "Up (visual line aware)" })
 
 -- Like `*` but without jumping -- just sets the search register/hlsearch.
 local function apply_search(pattern)
