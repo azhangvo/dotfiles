@@ -9,6 +9,7 @@ set -euo pipefail
 # name|why
 TOOLS=(
   "stow|runs install.sh itself"
+  "mise|installs the tools in mise/ config (nvim, starship, eza, ...)"
   "nvim|nvim/ config"
   "tmux|tmux/ config"
   "starship|shell/ prompt"

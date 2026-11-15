@@ -1,0 +1,8 @@
+[tools]
+neovim = "latest"
+starship = "latest"
+eza = "latest"
+zoxide = "latest"
+tree-sitter = "latest"
+dust = "latest"
+tealdeer = "latest"
